@@ -1,5 +1,7 @@
 const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 
 module.exports = {
@@ -16,6 +18,7 @@ module.exports = {
   target: 'web',
   entry: { app: './src/frontend/index.tsx' },
   plugins: [
+    new CleanWebpackPlugin(['out']),
     new HtmlWebpackPlugin({
       title: 'wearbeast!',
       templateContent: `
@@ -32,6 +35,7 @@ module.exports = {
             </html>
           `,
     }),
+    new CopyWebpackPlugin([{ from: 'pub/*' }]),
     new LiveReloadPlugin({
       port: 35729,
       appendScriptTag: true,
